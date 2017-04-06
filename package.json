@@ -1,0 +1,35 @@
+{
+  "name": "battlesnake-node",
+  "version": "1.0.0",
+  "description": "A simple battlesnake.io implementation in node.js",
+  "main": "battlesnake-client.js",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --inspect battlesnake-client.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lbsa71/battlesnake-node.git"
+  },
+  "keywords": [
+    "battlesnake",
+    "javascript",
+    "node",
+    "express",
+    "body-parser",
+    "snake"
+  ],
+  "author": "lbsa71",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lbsa71/battlesnake-node/issues"
+  },
+  "homepage": "https://github.com/lbsa71/battlesnake-node#readme"
+}
