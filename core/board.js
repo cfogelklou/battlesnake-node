@@ -1,13 +1,11 @@
-var BoardCellType = {
-    Empty: 0,
-    Food: 1,
-    Me: 2,
-    Enemy: 3,
-    Dead: 4,
-    Wall: 5
-}
+function Board(data) {
 
-function Board(myId, width, height, food, deadSnakes, snakes) {
+    var myId = ;
+    var width = ;
+    var height = ;
+    var food = ;
+    var deadSnakes = ;
+    var snakes = ;
 
     var setBoardPositionType = function (coordinate, cellType) {
         grid[coordinate.x, coordinate.y] = cellType;
@@ -57,4 +55,5 @@ function Board(myId, width, height, food, deadSnakes, snakes) {
     }
 }
 
-export BoardCellType, Board
+export Board
+

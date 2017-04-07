@@ -26,6 +26,10 @@ app.route('/')
 
    app.post('/move', jsonParser, function(req, res) {
 
+       var data = req.body;
+
+       var gameStatus = new GameStatus(data);
+
        res.json({command:"pong!"})
 
    })
