@@ -24,13 +24,17 @@ function Snake(data, state) {
         "taunt": { "get": function () { return taunt; } },
         "health_points": { "get": function () { return health_points; } },
         "head": { "get": function () { return head; } },
-        "coords": { "get": function () { return coord; } }
+        "coords": { "get": function () { return coords; } }
     });
 
     function isOk(board, direction) {
         var peekType = board.Peek(head, direction);
 
-        return peekType == BoardCellType.Empty || peekType == BoardCellType.Food;
+        if (peekType == BoardCellType.Empty || peekType == BoardCellType.Food) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function distance(coordinate) {
@@ -48,6 +52,7 @@ function Snake(data, state) {
         if (distance1 < distance2) {
             return -1;
         }
+
         if (distance1 > distance2) {
             return 1;
         }
@@ -59,27 +64,34 @@ function Snake(data, state) {
         if (state.food.length > 0) {
             var food = state.food.sort(distanceComparer)[0];
 
-            if (head.x < food.x && isOk(state.board, Move.Right))
+            if (head.x < food.x && isOk(state.board, Move.Right)) {
                 return Move.Right;
+            }
 
-            if (head.x > food.x && isOk(state.board, Move.Left))
-                return Move.Left;
+            if (head.x > food.x && isOk(state.board, Move.Left)) {
+                    return Move.Left;
+            }
 
-            if (head.y < food.y && isOk(state.board, Move.Down))
+            if (head.y < food.y && isOk(state.board, Move.Down)) {
                 return Move.Down;
+            }
 
-            if (head.y > food.y && isOk(state.board, Move.Up))
+            if (head.y > food.y && isOk(state.board, Move.Up)) {
                 return Move.Up;
+            }
         }
 
-        if (isOk(state.board, Move.Right))
+        if (isOk(state.board, Move.Right)) {
             return Move.Right;
+        }
 
-        if (isOk(state.board, Move.Left))
+        if (isOk(state.board, Move.Left)) {
             return Move.Left;
+        }
 
-        if (isOk(state.board, Move.Down))
+        if (isOk(state.board, Move.Down)) {
             return Move.Down;
+        }
 
         return Move.Up;
     }

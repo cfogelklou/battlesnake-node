@@ -15,17 +15,18 @@ var Board = function (data) {
     var width = data.width
     var height = data.height
     var food = data.food
-    var snakes = data.dead_snakes
+    var snakes = data.snakes
     var dead_snakes = data.dead_snakes
 
     var setBoardPositionType = function (coordinate, cellType) {
-        grid[coordinate.x, coordinate.y] = cellType;
+        grid[coordinate.x][coordinate.y] = cellType;
     }
 
     var setPointArray = function (coordinates, boardCellType) {
         if (coordinates == null) return
 
-        for (var point in coordinates) {
+        for (var index in coordinates) {
+            var point = coordinates[index]
             setBoardPositionType(point, boardCellType)
         }
     }
@@ -35,24 +36,30 @@ var Board = function (data) {
     for (var x = 0; x < width; x++) {
         grid[x] = [];
     }
+   
+    if (dead_snakes != null) {
+        for (var index in dead_snakes) {
+            var dead_snake = dead_snakes[index]
+            setPointArray(dead_snake.coords, BoardCellType.Dead);
+        }
+    }
+        
+    for (var index in snakes) {
+        var snake = snakes[index]
+        var coords = snake.coords;
 
-    setPointArray(food, BoardCellType.Food);
-
-    if (dead_snakes != null)
-        for (var dead_snake in dead_snakes)
-            setPointArray(dead_snake.Coordinates, BoardCellType.Dead);
-
-    for (var snake in snakes) {
-        var coords = snake.Coordinates;
-
-        var boardCellType = snake.Id == myId ? BoardCellType.Me : BoardCellType.Enemy;
+        var boardCellType = snake.Id == you.id ? BoardCellType.Me : BoardCellType.Enemy;
 
         setPointArray(coords, boardCellType);
     }
 
+    // -- tricky! food has precedence over snakes, so you can cross a snake if there is food!
+    setPointArray(food, BoardCellType.Food);
+
     this.GetCellType = function (x, y) {
-        if (x < 0 || x >= width || y < 0 || y >= height)
+        if (x < 0 || x >= width || y < 0 || y >= height) {
             return BoardCellType.Wall;
+        }
 
         return grid[x][y] || BoardCellType.Empty;
     }
