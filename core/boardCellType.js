@@ -8,4 +8,4 @@ var BoardCellType = {
     Wall: 5
 }
 
-export BoardCellType
+exports.BoardCellType=BoardCellType

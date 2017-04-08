@@ -1,32 +1,49 @@
-function GameStatus(data) {
-    var myId = data.you
+var Board = require('./board.js').Board
+var Snake = require('./snake.js').Snake
+var Coordinate = require('./coordinate.js').Coordinate
+
+var GameStatus = function (data) {
+    var turn = data.turn
     var width = data.width
     var height = data.height
-    var food = data.food.map(food => new Food(food))
+    var food = data.food.map(food => new Coordinate(food[0], food[1]))
+    var snakes = data.snakes.map(snake => new Snake(snake, this))
+    
+    var dead_snakes = data.dead_snakes ? data.dead_snakes.map(snake => new Snake(snake, this)) : null
 
-    var board = new Board(myId, width, height, food, deadSnakes, snakes);
+    var you = snakes.find(s => s.id === data.you);
 
-    this.getBoard = function() { return board }
+    Object.defineProperties(this, {
+        "you": {
+            "get": function () { return you; }
+        },
+        "turn": {
+            "get": function () { return turn; }
+        },
+        "width": {
+            "get": function () { return width; }
+        },
+        "height": {
+            "get": function () { return height; }
+        },
+        "food": {
+            "get": function () { return food; }
+        },
+        "dead_snakes": {
+            "get": function () { return dead_snakes; }
+        },
+        "snakes": {
+            "get": function () { return snakes; }
+        }
+    });
 
-    [JsonProperty("you")]
-    public string You { get; set; }
+    var board = new Board(this);
 
-    [JsonProperty("width")]
-    public int Width { get; set; }
-
-    [JsonProperty("height")]
-    public int Height { get; set; }
-
-    [JsonProperty("turn")]
-    public int Move { get; set; }
-
-    [JsonProperty("snakes")]
-    public Snake[] Snakes { get; set; }
-
-    [JsonProperty("dead_snakes")]
-    public Snake[] DeadSnakes { get; set; }
-
-    [JsonProperty("food")]
-    public Coordinate[] Food { get; set; }
+    Object.defineProperties(this, {       
+        "board": {
+            "get": function () { return board; }
+        }
+    });
 }
-}
+
+exports.GameStatus = GameStatus
