@@ -18,8 +18,21 @@ var Board = function (data) {
     var snakes = data.snakes
     var dead_snakes = data.dead_snakes
 
+    var getCellType = function (x, y) {
+        if (x < 1 || x >= width || y < 1 || y >= height) {
+            return BoardCellType.Wall;
+        }
+
+        return grid[x][y] || BoardCellType.Empty;
+    };
+
     var setBoardPositionType = function (coordinate, cellType) {
-        grid[coordinate.x][coordinate.y] = cellType;
+        var x = coordinate.x;
+        var y = coordinate.y;
+
+        if (getCellType(x, y) !== BoardCellType.Wall) {
+            grid[x][y] = cellType;
+        }
     }
 
     var setPointArray = function (coordinates, boardCellType) {
@@ -36,14 +49,14 @@ var Board = function (data) {
     for (var x = 0; x < width; x++) {
         grid[x] = [];
     }
-   
+
     if (dead_snakes != null) {
         for (var index in dead_snakes) {
             var dead_snake = dead_snakes[index]
             setPointArray(dead_snake.coords, BoardCellType.Dead);
         }
     }
-        
+
     for (var index in snakes) {
         var snake = snakes[index]
         var coords = snake.coords;
@@ -55,14 +68,8 @@ var Board = function (data) {
 
     // -- tricky! food has precedence over snakes, so you can cross a snake if there is food!
     setPointArray(food, BoardCellType.Food);
-
-    this.GetCellType = function (x, y) {
-        if (x < 0 || x >= width || y < 0 || y >= height) {
-            return BoardCellType.Wall;
-        }
-
-        return grid[x][y] || BoardCellType.Empty;
-    }
+    
+    this.GetCellType = getCellType
 
     this.Peek = function (peekCoordinate, direction) {
         var peekX = peekCoordinate.x + directionOffset[direction].x;
@@ -73,4 +80,3 @@ var Board = function (data) {
 }
 
 exports.Board = Board
-

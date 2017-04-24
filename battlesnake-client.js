@@ -2,7 +2,7 @@
 var express = require('express'),
   bodyParser = require('body-parser'),
   app = express(),
-  port = process.env.PORT || 80
+  port = process.env.PORT || 3304
 
 var GameStatus = require('./core/gameStatus.js').GameStatus
 
@@ -47,7 +47,7 @@ app.post('/move', jsonParser, function(req, res) {
     var data = req.body
 
     var gameStatus = new GameStatus(data)
-    
+
     var move = gameStatus.you.update()
     var taunt = "OUTTA MY WAY SNAKE!"
 
