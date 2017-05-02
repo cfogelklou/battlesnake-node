@@ -1,5 +1,7 @@
 var Coordinate = require('./coordinate.js').Coordinate
 
+var currentDir = [];
+
 var Move =
 {
     Up: "up",
@@ -30,8 +32,13 @@ function Snake(data, state) {
 
     this.update = function () {
 
-        return Move.Right;
+      var directions = [Move.Up, Move.Right, Move.Down, Move.Left]
 
+      var oldDir = currentDir[this.id] || 0
+
+      currentDir[this.id] = ++oldDir % 4;
+
+        return directions[currentDir[this.id]]
     }
 }
 
